@@ -30,24 +30,37 @@ Medium(Assignment-2)
 
 The tools are --->
 
--ESLint: Checks the code for mistakes and keeps the style consistent.
+-ESLint: ESLint looks through the code to spot common problems or things that don’t follow the rules — like unused variables or inconsistent quotes.Checks the code for mistakes and keeps the style consistent.It keeps everyone’s code clean, readable  and free of small mistakes before they turn into big ones.
 
--Prettier: Automatically formats the code to look clean and uniform.
+-Prettier: Prettier fixes how the code looks — it lines things up, adds spaces, and organizes it nicely so it’s easier to read.It removes the need to argue about where to put a comma or how many spaces to use more like everyone's code ends up looking the same.
 
--Husky: Lets us run scripts (like checks or formatting) before making a commit.
+-Husky: Husky connects to Git and runs certain commands right before code is committed.For example,it can run ESLint or Prettier automatically.It makes sure we're not committing messy or broken code.If there’s a problem, the commit gets stopped until you fix it.
 
--Lint-staged: Runs those checks only on files which are about to commit, saving time.
+-Lint-staged:Lint-staged makes things faster by only running checks on files that are actually trying to commit, not the whole project.Without it,tools like ESLint would check every file, which takes time. This keeps things quick.
 
 
-SET Up process -->
+SET Up ESLint, Prettier, Husky, and Lint-staged-->
 
-1)npx mrm lint-staged: Run this command in terminal for necessary installations.
-2)Edit json package =
-"lint-staged": {
- "*.{ts,tsx}": [
-  "prettier --write",
-  "eslint --max-warnings 0 ."
-  ]
+1)Initialize project with command: npm init -y
+
+2)Install necessary packages: npm install --save-dev eslint prettier husky lint-staged
+
+3)Set Up ESLint: npx eslint --init
+
+4)Set Up Husky:
+npx husky install => this cmd creates git hook.
+add it in scripts =>
+"scripts": {
+  "prepare": "husky install"
 }
 
-This setup automatically checks and fixes the code before every commit and it keeps the code clean and avoids errors being pushed into the project and it also saves time and helps everyone on the team write code the same way.
+5)npx husky add .husky/pre-commit "npx lint-staged": This cmd sets up a pre-commit Git hook that runs lint-staged.
+
+6)"lint-staged": {
+  "*.{js,ts,tsx}": [
+    "prettier --write",
+    "eslint --fix"
+  ]
+}
+Adding a lint-staged section to tell it what to run on which files.
+
